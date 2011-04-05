@@ -1,12 +1,19 @@
-var bowlingGame = function () {
+var bowlingGame = function (frames) {
 
-    var score = 0;
+    var manager = rollManager();
 
     return {
         roll: function(numberOfPins) {
-            score += numberOfPins;
+            manager.addRoll(numberOfPins);
+
         },
         score: function() {
+            var score = 0;
+
+            for (var i = 0; i < frames; i++) {
+                score += manager.getFrameScore(i);
+            }
+
             return score;
         }
     }
