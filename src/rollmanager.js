@@ -1,6 +1,7 @@
 var rollManager = function() {
     var rolls = [];
 
+
     return {
 
         getFrameScore : function(i) {

@@ -30,4 +30,13 @@ describe("A bowling game should calculate the score", function() {
     });
 
 
+    it("should calculate the score for a strike to include the bonus of the next frame", function() {
+
+        var game = bowlingGame(10);
+        game.roll(10);
+        game.roll(2);
+        game.roll(5);
+
+        expect(game.score()).toBe(24);
+    });
 });
