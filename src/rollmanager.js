@@ -1,6 +1,16 @@
-var rollManager = function() {
+caek.rollManager = function() {
     var rolls = [];
+    var frames = [];
 
+    var getCurrentFrame = function() {
+
+        if(frames.length === 0)
+        {
+            frames.push(caek.frame());
+        }
+
+        return frames[frames.length-1];
+    }
 
     return {
 
@@ -13,6 +23,9 @@ var rollManager = function() {
 
         addRoll : function(pins) {
             rolls.push(pins);
+
+            var frame = getCurrentFrame();
+            frame.addRoll(pins);
         }
 
     }

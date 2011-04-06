@@ -1,17 +1,17 @@
 var bowlingGame = function (frames) {
 
-    var manager = rollManager();
+    var rollManager = caek.rollManager();
 
     return {
         roll: function(numberOfPins) {
-            manager.addRoll(numberOfPins);
+            rollManager.addRoll(numberOfPins);
 
         },
         score: function() {
             var score = 0;
 
             for (var i = 0; i < frames; i++) {
-                score += manager.getFrameScore(i);
+                score += rollManager.getFrameScore(i);
             }
 
             return score;
