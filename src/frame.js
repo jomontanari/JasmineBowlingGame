@@ -22,11 +22,15 @@ caek.frame = function(i, rolls) {
 
         score: function() {
             var frameScore = 0;
+
             if (rolls[i]) { // do we have that many rolls
+
                 frameScore = rolls[i]; // add first role
+
                 if (rolls[i + 1]) {  // is there a second role
                     frameScore += rolls[i + 1];
                 }
+
                 if (frameScore === 10) {
                     if (rolls[i + 2]) {
                         frameScore += rolls[i + 2];    // is it a spare
