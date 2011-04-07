@@ -27,7 +27,7 @@ describe("rollmanager", function() {
 
         var rollManager = caek.rollManager();
 
-        caek.frame = jasmine.createSpy("Created a new frame").andReturn(fakeFrame);
+        spyOn(caek, "frame").andReturn(fakeFrame);
         rollManager.addRoll(5);
 
         expect(caek.frame).toHaveBeenCalled();
@@ -35,10 +35,10 @@ describe("rollmanager", function() {
 
     });
 
+
     it("should add the first roll to the first frame", function() {
 
-        caek.frame = jasmine.createSpy("Created new frame").andReturn(fakeFrame);
-
+        spyOn(caek, "frame").andReturn(fakeFrame);
 
         var rollManager = caek.rollManager();
         var pins = 2;
@@ -50,7 +50,7 @@ describe("rollmanager", function() {
 
     it("should add the roll to the current frame if it isn't complete yet", function() {
 
-        caek.frame = jasmine.createSpy("Created new frame").andReturn(fakeFrame);
+        spyOn(caek, "frame").andReturn(fakeFrame);
 
         var rollManager = caek.rollManager();
         rollManager.addRoll(5);
@@ -62,7 +62,7 @@ describe("rollmanager", function() {
 
     it("should create a new frame if the current frame is complete (with Spy)", function() {
 
-        caek.frame = jasmine.createSpy("Created new frame").andReturn(fakeFrame);
+        spyOn(caek, "frame").andReturn(fakeFrame);
 
         fakeFrame.isComplete = jasmine.createSpy().andReturn(false);
 
@@ -75,5 +75,18 @@ describe("rollmanager", function() {
         expect(caek.frame.callCount).toBe(2);
     });
 
+    it("should correctly retrieve the score for a frame", function() {
 
+        var rollManager = caek.rollManager();
+        rollManager.addRoll(5);
+        rollManager.addRoll(2);
+        rollManager.addRoll(6);
+        rollManager.addRoll(3);
+
+        var frameOneScore = rollManager.getFrameScore(0);
+        var frameTwoScore = rollManager.getFrameScore(1);
+
+        expect(frameOneScore).toBe(7);
+        expect(frameTwoScore).toBe(9);
+    });
 });

@@ -1,44 +1,37 @@
-caek.frame = function(i, rolls) {
+caek.frame = function() {
 
     var frameRolls = [];
+    var bonusForSpare = 0;
 
     var maximumRollsReached = function() {
         return frameRolls.length === 2;
     };
 
     var isStrike = function() {
-        return (frameRolls.length === 1 && score() === 10)
+        return (frameRolls.length === 1 && totalPinsKnockedDown() === 10)
     };
 
-    var score = function() {
-        var frameScore = 0;
-        for (var i=0;i<frameRolls.length;i++) {
-            frameScore += frameRolls[i];
+    var isSpare = function() {
+        return (!isStrike() && (totalPinsKnockedDown() === 10));
+    };
+
+    var totalPinsKnockedDown = function() {
+        var totalPins = 0;
+        for (var i = 0; i < frameRolls.length; i++) {
+            totalPins += frameRolls[i];
         }
+        return totalPins;
+    }
+
+    var score = function() {
+        frameScore = totalPinsKnockedDown();
+        if (isSpare()) frameScore += bonusForSpare;
         return frameScore;
     };
 
     return {
 
-        score: function() {
-            var frameScore = 0;
-
-            if (rolls[i]) { // do we have that many rolls
-
-                frameScore = rolls[i]; // add first role
-
-                if (rolls[i + 1]) {  // is there a second role
-                    frameScore += rolls[i + 1];
-                }
-
-                if (frameScore === 10) {
-                    if (rolls[i + 2]) {
-                        frameScore += rolls[i + 2];    // is it a spare
-                    }
-                }
-            }
-            return frameScore;
-        },
+        score: score,
 
         isComplete: function() {
             return maximumRollsReached() || isStrike();
@@ -46,6 +39,10 @@ caek.frame = function(i, rolls) {
 
         addRoll: function (numberOfPins) {
             frameRolls.push(numberOfPins);
+        },
+
+        setSpareBonus: function(spareBonus) {
+            bonusForSpare = spareBonus;
         }
     }
 };

@@ -26,4 +26,26 @@ describe("the frame", function() {
         expect(frame.isComplete()).toBeFalsy();
     });
 
+    it("should correctly calculate a score as the sum of two rolls", function() {
+
+        var frame = caek.frame();
+        frame.addRoll(3);
+        frame.addRoll(2);
+
+        expect(frame.score()).toBe(5);
+
+    });
+
+    it("should correctly calculate the score of a spare including the bonus", function() {
+
+        console.log("spare test")
+        var frame = caek.frame();
+        frame.addRoll(9);
+        frame.addRoll(1);
+        frame.setSpareBonus(4);
+
+
+        expect(frame.score()).toBe(14);
+    });
+
 });

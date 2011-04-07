@@ -1,6 +1,5 @@
 caek.rollManager = function() {
     var frames = [];
-    var rolls = [];
 
     var getCurrentFrame = function() {
 
@@ -31,13 +30,10 @@ caek.rollManager = function() {
     return {
 
         getFrameScore : function(i) {
-            var frame = caek.frame(i, rolls);
-            return frame.score();
+            return frames[i].score();
         },
 
         addRoll : function(pins) {
-            rolls.push(pins);
-
             var frame = getPlayableFrame();
             frame.addRoll(pins);
         }
