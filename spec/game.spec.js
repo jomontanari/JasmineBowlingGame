@@ -21,6 +21,7 @@ describe("A bowling game should calculate the score", function() {
 
     it("should calculate the score for a spare to include the bonus of the next roll", function() {
 
+        console.log("spare game");
         var game = bowlingGame(10);
         game.roll(9);
         game.roll(1);
@@ -32,6 +33,7 @@ describe("A bowling game should calculate the score", function() {
 
     it("should calculate the score for a strike to include the bonus of the next frame", function() {
 
+        console.log("strike game")
         var game = bowlingGame(10);
         game.roll(10);
         game.roll(2);

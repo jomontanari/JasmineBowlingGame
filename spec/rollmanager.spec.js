@@ -5,7 +5,8 @@ describe("rollmanager", function() {
     beforeEach(function() {
         fakeFrame = {
             addRoll: jasmine.createSpy("Add roll"),
-            isComplete: jasmine.createSpy("Is complete")
+            isComplete: jasmine.createSpy("Is complete"),
+            setSpareBonus: jasmine.createSpy("spare bonus")
         };
     });
 
@@ -97,6 +98,52 @@ describe("rollmanager", function() {
         var frameNotPlayedYetScore = rollManager.getFrameScore(0);
         expect(frameNotPlayedYetScore).toBe(0);
 
+    });
+
+    // Included to demonstrate that this turned out to be very messy
+
+    it("should set the spare bonus for a frame to the first roll of the next frame using spies (complicated!)", function() {
+
+        var firstFakeFrame = {
+            addRoll: jasmine.createSpy("Add roll"),
+            setSpareBonus : jasmine.createSpy("setting spare bonus"),
+            isComplete : jasmine.createSpy("is complete").andReturn(true)
+        };
+        var secondFakeFrame = {
+            addRoll: jasmine.createSpy("Add roll"),
+            isComplete : jasmine.createSpy("is complete").andReturn(false)
+        };
+
+        spyOn(caek, "frame").andCallFake(function() {
+            console.log(caek.frame.callCount);
+            if (caek.frame.callCount === 1) {
+                return firstFakeFrame;
+            } else {
+                return secondFakeFrame;
+            }
+        });
+
+
+        var rollManager = caek.rollManager();
+        rollManager.addRoll(5);
+        rollManager.addRoll(3);
+
+        expect(firstFakeFrame.setSpareBonus).toHaveBeenCalledWith(3);
 
     });
+
+    it("should set the spare bonus correctly for a frame (alternative test)", function() {
+
+        var rollManager = caek.rollManager();
+        rollManager.addRoll(5);
+        rollManager.addRoll(5);
+
+        spyOn(caek, "frame").andReturn(fakeFrame);
+
+        rollManager.addRoll(3);
+
+        expect(rollManager.getFrameScore(0)).toBe(13)
+
+    });
+
 });

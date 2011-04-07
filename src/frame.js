@@ -2,6 +2,7 @@ caek.frame = function() {
 
     var frameRolls = [];
     var bonusForSpare = 0;
+    var bonusForStrike = 0;
 
     var maximumRollsReached = function() {
         return frameRolls.length === 2;
@@ -25,6 +26,7 @@ caek.frame = function() {
 
     var score = function() {
         frameScore = totalPinsKnockedDown();
+        if (isStrike()) frameScore += bonusForStrike;
         if (isSpare()) frameScore += bonusForSpare;
         return frameScore;
     };
@@ -43,6 +45,10 @@ caek.frame = function() {
 
         setSpareBonus: function(spareBonus) {
             bonusForSpare = spareBonus;
+        },
+
+        setStrikeBonus: function(strikeBonus) {
+            bonusForStrike = strikeBonus;
         }
     }
 };

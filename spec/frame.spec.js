@@ -38,7 +38,6 @@ describe("the frame", function() {
 
     it("should correctly calculate the score of a spare including the bonus", function() {
 
-        console.log("spare test")
         var frame = caek.frame();
         frame.addRoll(9);
         frame.addRoll(1);
@@ -48,4 +47,12 @@ describe("the frame", function() {
         expect(frame.score()).toBe(14);
     });
 
+    it("should correctly calculate the score of a strike including the bonus", function() {
+
+        var frame = caek.frame();
+        frame.addRoll(10);
+        frame.setStrikeBonus(8);
+
+        expect(frame.score()).toBe(18);
+    });
 });
