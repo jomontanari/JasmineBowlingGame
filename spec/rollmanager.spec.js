@@ -89,4 +89,14 @@ describe("rollmanager", function() {
         expect(frameOneScore).toBe(7);
         expect(frameTwoScore).toBe(9);
     });
+
+    it("should return 0 for a frame that's not played yet", function() {
+
+        var rollManager = caek.rollManager();
+
+        var frameNotPlayedYetScore = rollManager.getFrameScore(0);
+        expect(frameNotPlayedYetScore).toBe(0);
+
+
+    });
 });

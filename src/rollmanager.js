@@ -30,6 +30,9 @@ caek.rollManager = function() {
     return {
 
         getFrameScore : function(i) {
+            if (!frames[i]) {
+                return 0;
+            }
             return frames[i].score();
         },
 
