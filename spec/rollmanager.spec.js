@@ -6,7 +6,9 @@ describe("rollmanager", function() {
         fakeFrame = {
             addRoll: jasmine.createSpy("Add roll"),
             isComplete: jasmine.createSpy("Is complete"),
-            setSpareBonus: jasmine.createSpy("spare bonus")
+            setSpareBonus: jasmine.createSpy("spare bonus"),
+            setStrikeBonus: jasmine.createSpy("strike bonus"),
+            score: jasmine.createSpy("score")
         };
     });
 
@@ -115,7 +117,6 @@ describe("rollmanager", function() {
         };
 
         spyOn(caek, "frame").andCallFake(function() {
-            console.log(caek.frame.callCount);
             if (caek.frame.callCount === 1) {
                 return firstFakeFrame;
             } else {
@@ -138,12 +139,22 @@ describe("rollmanager", function() {
         rollManager.addRoll(5);
         rollManager.addRoll(5);
 
-        spyOn(caek, "frame").andReturn(fakeFrame);
-
         rollManager.addRoll(3);
 
         expect(rollManager.getFrameScore(0)).toBe(13)
 
     });
+
+    it("should set the strike bonus correctly for a frame (no spies)", function() {
+
+        var rollManager = caek.rollManager();
+        rollManager.addRoll(10);
+        rollManager.addRoll(5);
+        rollManager.addRoll(3);
+
+        expect(rollManager.getFrameScore(0)).toBe(18);
+
+    });
+
 
 });

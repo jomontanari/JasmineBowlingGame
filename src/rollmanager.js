@@ -40,6 +40,13 @@ caek.rollManager = function() {
         }
     };
 
+    var setStrikeBonus = function() {
+        if (currentFrameIsComplete() && !isFirstFrame()) {
+            var strikeBonus = getCurrentFrame().score();
+            getPreviousFrame().setStrikeBonus(strikeBonus);
+        }
+    }
+
 
     return {
 
@@ -55,6 +62,7 @@ caek.rollManager = function() {
             var frame = getPlayableFrame();
             frame.addRoll(pins);
             setSpareBonus(pins);
+            setStrikeBonus();
         }
 
     }
