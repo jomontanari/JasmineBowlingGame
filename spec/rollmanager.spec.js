@@ -10,21 +10,11 @@ describe("rollmanager", function() {
             setStrikeBonus: jasmine.createSpy("strike bonus"),
             score: jasmine.createSpy("score")
         };
+
+        // Alternative implementation
+        alternativeFakeFrame = jasmine.createSpyObj("fakeFrame", ["addRoll", "isComplete", "setSpareBonus", "setStrikeBonus", "score"]);
     });
 
-    // it complained if this function wasn't at the end ... weird
-    it("should create a new frame if the current frame is complete (with real object)", function() {
-
-        spyOn(caek, "frame").andCallThrough();
-
-        var rollManager = caek.rollManager();
-        rollManager.addRoll(5);
-        rollManager.addRoll(2);
-        rollManager.addRoll(5);
-
-        expect(caek.frame.callCount).toBe(2);
-
-    });
 
     it("should create a new frame if there isn't a current frame", function() {
 
@@ -49,6 +39,17 @@ describe("rollmanager", function() {
 
         expect(caek.frame).toHaveBeenCalled();
         expect(fakeFrame.addRoll).toHaveBeenCalledWith(pins);
+    });
+
+    it("should add the first roll to the first frame - with most recent call", function() {
+
+        spyOn(caek, "frame").andReturn(fakeFrame);
+
+        var rollManager = caek.rollManager();
+        var pins = 2;
+        rollManager.addRoll(pins);
+
+        expect(fakeFrame.addRoll.mostRecentCall.args[0]).toBe(pins);
     });
 
     it("should add the roll to the current frame if it isn't complete yet", function() {
@@ -76,6 +77,19 @@ describe("rollmanager", function() {
         rollManager.addRoll(2);
 
         expect(caek.frame.callCount).toBe(2);
+    });
+
+    it("should create a new frame if the current frame is complete (with real object)", function() {
+
+        spyOn(caek, "frame").andCallThrough();
+
+        var rollManager = caek.rollManager();
+        rollManager.addRoll(5);
+        rollManager.addRoll(2);
+        rollManager.addRoll(5);
+
+        expect(caek.frame.callCount).toBe(2);
+
     });
 
     it("should correctly retrieve the score for a frame", function() {
