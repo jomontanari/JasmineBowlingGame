@@ -1,5 +1,9 @@
 describe("the frame", function() {
 
+    var bigOldFrame = caek.frame();
+    frame.addRoll(4);
+    console.log(frame.score());
+
     it("should be complete if two rolls have been made", function() {
 
         var frame = caek.frame();
@@ -54,5 +58,15 @@ describe("the frame", function() {
         frame.setStrikeBonus(8);
 
         expect(frame.score()).toBe(18);
+    });
+
+    it("should be falsy", function() {
+
+        expect(0).toBeFalsy();
+        expect(undefined).toBeFalsy();
+        expect(null).toBeFalsy();
+        expect("").toBeFalsy();
+        expect(NaN).toBeFalsy();
+        expect(false).toBeFalsy();
     });
 });
