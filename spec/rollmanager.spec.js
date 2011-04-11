@@ -52,6 +52,17 @@ describe("rollmanager", function() {
         expect(fakeFrame.addRoll.mostRecentCall.args[0]).toBe(pins);
     });
 
+    it("should add the first roll to the first frame - with most recent call", function() {
+
+        spyOn(caek, "frame").andReturn(fakeFrame);
+
+        var rollManager = caek.rollManager();
+        var pins = 2;
+        rollManager.addRoll(pins);
+
+        expect(fakeFrame.addRoll.calls[0].args[0]).toBe(pins);
+    });
+
     it("should add the roll to the current frame if it isn't complete yet", function() {
 
         spyOn(caek, "frame").andReturn(fakeFrame);
